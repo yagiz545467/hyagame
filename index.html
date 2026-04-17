@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HYA GAME</title>
+    <script src="react.js"></script>
+    <script src="react-dom.js"></script>
+    <script src="babel.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="root"></div>
+    <script src="sorular.js"></script>
+    <script type="text/babel">
+const { useState, useEffect } = React;
+
+const ADMIN_PASSWORD = "HYA2026";
+
+// Kaynak: https://github.com/ooguz/turkce-kufur-karaliste
+const BAD_WORDS = ["abaza","abazan","ag","ahmak","allahsız","am","amarım","ambiti","am biti","amcığı","amcığın","amcığını","amcığınızı","amcık","amcik","amck","amcuk","amık","amına","amınako","amına koy","amına koyarım","amına koyayım","amınakoyim","amına koyyim","amına s","amına sikem","amına sokam","amın feryadı","amını","amının","amın oglu","amınoğlu","amın oğlu","amısına","amısını","amina","aminako","aminakoyarim","amina koyarim","amina koyayım","amina koyayim","aminakoyim","amindi","amindan","amini","aminoglu","amiyum","amk","amkafa","amk çocuğu","amlı","ammak","ammna","amna","amnn","amsız","amsiz","anal","anan","anana","anandan","ananı","ananın","ananın amı","ananın dölü","ananınki","ananısikerim","ananı sikerim","ananısikeyim","ananı sikeyim","ananızın","anani","ananin","ananisikerim","anani sikerim","ananisikeyim","anani sikeyim","anasını","anasının am","anası orospu","anasi","anasinin","angut","anneni","annenin","annesiz","aptal","aq","ass","atkafası","atmık","avrat","azdım","azdır","azdırıcı","babanı","babanın","bacına","bacını","bacının","bacini","bastard","basur","beyinsiz","bızır","bitch","bok","boka","bokbok","bokça","bokhu","boklar","boktan","boku","bokum","bombok","boner","bosalmak","boşalmak","cenabet","cibiliyetsiz","cibilliyetini","cibilliyetsiz","çük","dalaksız","dallama","daltassak","dalyarak","dalyarrak","dangalak","dassagi","diktim","dildo","dingil","dingilini","dinsiz","domal","domalan","domaldı","domaldın","domalık","domalıyor","domalmak","domalmış","domalsın","domalt","domaltarak","domaltıp","domaltır","domaltırım","domaltip","domaltmak","dölü","dönek","düdük","eben","ebeni","ebenin","ebeninki","ebleh","ecdadını","ecdadini","embesil","fahise","fahişe","fuck","fucker","fuckin","fucking","gavad","gavat","geber","geberik","gebermek","gebermiş","gebertir","gerizekalı","gerizekali","gerzek","giberim","giberler","gibis","gibiş","gibmek","gibtiler","goddamn","godoş","godumun","gotelek","gotlalesi","gotlu","gotten","gotundeki","gotunden","gotune","gotunu","gotveren","goyiim","goyum","goyuyim","goyyim","göt","göt deliği","götelek","göt herif","götlalesi","götlek","götoğlanı","göt oğlanı","götoş","götten","götü","götün","götüne","götünekoyim","götüne koyim","götünü","götveren","göt veren","göt verir","hasiktir","hassikome","hassiktir","has siktir","hassittir","haysiyetsiz","hayvan herif","hoşafı","hödük","huur","ıbnelık","ibina","ibine","ibinenin","ibne","ibnedir","ibneleri","ibnelik","ibnelri","ibneni","ibnenin","ibnerator","ibnesi","idiot","idiyot","ipne","iserim","işerim","itoğlu it","kafam girsin","kafasız","kafasiz","kahpe","kahpenin","kahpenin feryadı","kaka","kaltak","kancık","kancik","kappe","karhane","kaşar","kavat","kavatn","kaypak","kerane","kerhane","kerhanelerde","kevase","kevaşe","kevvase","koca göt","koduğmun","koduğmunun","kodumun","kodumunun","koduumun","koyarm","koyayım","koyiim","koyiiym","koyim","koyum","koyyim","laciye boyadım","lavuk","liboş","madafaka","mal","malafat","malak","manyak","meme","memelerini","motherfucker","oc","ocuu","ocuun","oç","o. çocuğu","oğlancı","orosbucocuu","orospu","orospucocugu","orospu cocugu","orospu çoc","orospuçocuğu","orospu çocuğu","orospu çocuğudur","orospu çocukları","orospudur","orospular","orospunun","orospunun evladı","orospuydu","orospuyuz","orostopol","orrospu","oruspu","oruspuçocuğu","oruspu çocuğu","ossurduum","ossurmak","ossuruk","osur","osuruk","osururum","otuzbir","öküz","penis","pezevek","pezeven","pezeveng","pezevengi","pezevenk","pezo","pic","pici","picler","piç","piçin oğlu","piç kurusu","piçler","pipi","pipiş","pisliktir","porno","pussy","puşt","puşttur","s1kerim","s1kerm","s1krm","sakso","saksofon","salaak","salak","saxo","sekis","serefsiz","sıçarım","sıçtığım","sie","sik","sikdi","sikdiğim","sike","sikecem","sikem","siken","sikenin","siker","sikerim","sikerler","sikersin","sikertir","sikertmek","sikesen","sikey","sikeydim","sikeyim","sikeym","siki","sikicem","sikici","sikien","sikienler","sikiiim","sikiim","sikiir","sikiirken","sikik","sikil","sikildiini","sikilesice","sikilmi","sikilmie","sikilmis","sikilmiş","sikilsin","sikim","sikimde","sikimden","sikime","sikimi","sikimiin","sikimin","sikimle","sikimsonik","sikimtrak","sikin","sikinde","sikinden","sikine","sikini","sikip","sikis","sikisek","sikisen","sikish","sikismis","sikiş","sikişen","sikişme","sikiyim","sikiym","sikiyorum","sikkim","sikko","sikleri","sikleriii","sikli","sikm","sikmek","sikmem","sikmiler","sikmisligim","siksem","sikseydin","sikseyidin","siksin","siksinbaya","siksinler","siksiz","siksok","siksz","sikt","sikti","siktigimin","siktigiminin","siktiğim","siktiğimin","siktiğiminin","siktii","siktiim","siktiimin","siktiiminin","siktiler","siktim","siktimin","siktiminin","siktir","siktir et","siktirgit","siktir git","siktirir","siktiririm","siktiriyor","siktir lan","siktirolgit","siktir ol git","sittimin","sittir","skcem","skecem","skem","sker","skerim","skerm","skeyim","skiim","skik","skim","skime","skmek","sksin","sksn","sksz","sktrr","skyim","sokam","sokarım","sokarim","sokarm","sokayım","sokaym","sokiim","soktuğumunun","sokuk","sokum","sokuş","sokuyum","sulaleni","sülaleni","sülalenizi","sürtük","şerefsiz","şıllık","taaklarn","taaklarna","tarrakimin","tasak","tassak","taşak","taşşak","vajina","vajinanı","veled","veledizina","veled i zina","verdiimin","weled","weledizina","whore","xikeyim","yalama","yalarım","yalarun","yarak","yaraksız","yaraktr","yaram","yaraminbasi","yarra","yarraaaa","yarraak","yarraam","yarrağım","yarrak","yarraimin","yarraminbaşı","yarramn","yarran","yarrana","yarrrak","yavak","yavş","yavşak","yavşaktır","yavuşak","yılışık","yilisik","yogurtlayam","yoğurtlayam","yrrak","zıkkımım","zibidi","zigsin","zikeyim","zikiiim","zikiim","zikik","zikim","ziksiiin","ziksiin"];
+
+const shuffleArray = (array) => [...array].sort(() => Math.random() - 0.5);
+
+// Leet speak normalizasyonu: S1K1S → sıkıs, 4M → am gibi
+const normalizeLeet = (text) => {
+  return text
+    .toLowerCase()
+    .replace(/4/g, 'a')
+    .replace(/@/g, 'a')
+    .replace(/1/g, 'i')
+    .replace(/!/g, 'i')
+    .replace(/3/g, 'e')
+    .replace(/0/g, 'o')
+    .replace(/5/g, 's')
+    .replace(/\$/g, 's')
+    .replace(/7/g, 't')
+    .replace(/\+/g, 't')
+    .replace(/9/g, 'g')
+    .replace(/6/g, 'b')
+    .replace(/8/g, 'b')
+    .replace(/\*/g, '')
+    .replace(/\./g, '')
+    .replace(/-/g, '')
+    .replace(/_/g, '')
+    .replace(/\s/g, '');
+};
+
+const isBadWord = (name) => {
+  const normalized = normalizeLeet(name);
+  // Hem orijinal hem normalize haliyle kontrol et
+  const original = name.toLowerCase().replace(/\s/g, '');
+  return BAD_WORDS.some(w => {
+    const cleanWord = w.toLowerCase().replace(/\s/g, '');
+    return original.includes(cleanWord) || normalized.includes(cleanWord);
+  });
+};
+
+const getScores = () => JSON.parse(localStorage.getItem('hya_scores') || '[]');
+const saveScore = (entry) => {
+  const scores = getScores();
+  scores.push(entry);
+  scores.sort((a,b) => b.score - a.score);
+  localStorage.setItem('hya_scores', JSON.stringify(scores));
+};
+
+// Pending sorular için LocalStorage yardımcıları
+const getPending = () => JSON.parse(localStorage.getItem('hya_pending') || '[]');
+const savePending = (list) => localStorage.setItem('hya_pending', JSON.stringify(list));
+const getApproved = () => JSON.parse(localStorage.getItem('hya_approved') || '[]');
+const saveApproved = (list) => localStorage.setItem('hya_approved', JSON.stringify(list));
+
+// ─── Web Audio Ses Efektleri ──────────────────────────────────────────────
+const getAudioCtx = () => new (window.AudioContext || window.webkitAudioContext)();
+
+const playCorrect = () => {
+  const ctx = getAudioCtx();
+  [523, 659, 784].forEach((freq, i) => {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.type = 'sine'; osc.frequency.value = freq;
+    gain.gain.setValueAtTime(0.3, ctx.currentTime + i * 0.1);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.1 + 0.3);
+    osc.start(ctx.currentTime + i * 0.1);
+    osc.stop(ctx.currentTime + i * 0.1 + 0.3);
+  });
+};
+
+const playWrong = () => {
+  const ctx = getAudioCtx();
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.connect(gain); gain.connect(ctx.destination);
+  osc.type = 'sawtooth'; osc.frequency.value = 220;
+  osc.frequency.exponentialRampToValueAtTime(110, ctx.currentTime + 0.3);
+  gain.gain.setValueAtTime(0.3, ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
+  osc.start(ctx.currentTime);
+  osc.stop(ctx.currentTime + 0.35);
+};
+
+const playTick = () => {
+  const ctx = getAudioCtx();
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.connect(gain); gain.connect(ctx.destination);
+  osc.type = 'square'; osc.frequency.value = 880;
+  gain.gain.setValueAtTime(0.15, ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
+  osc.start(ctx.currentTime);
+  osc.stop(ctx.currentTime + 0.08);
+};
+
+const playWin = () => {
+  const ctx = getAudioCtx();
+  [523, 659, 784, 1046].forEach((freq, i) => {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.type = 'sine'; osc.frequency.value = freq;
+    gain.gain.setValueAtTime(0.3, ctx.currentTime + i * 0.13);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.13 + 0.4);
+    osc.start(ctx.currentTime + i * 0.13);
+    osc.stop(ctx.currentTime + i * 0.13 + 0.4);
+  });
+};
+
+// ─── Konfeti ──────────────────────────────────────────────────────────────
+const Confetti = () => {
+  const canvasRef = React.useRef(null);
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const pieces = Array.from({length: 120}, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * -canvas.height,
+      r: Math.random() * 8 + 4,
+      d: Math.random() * 80 + 20,
+      color: ['#38bdf8','#f87171','#4ade80','#fbbf24','#a78bfa','#fb923c'][Math.floor(Math.random()*6)],
+      tilt: Math.random() * 10 - 10,
+      tiltAngle: 0,
+      tiltSpeed: Math.random() * 0.1 + 0.05,
+    }));
+    let angle = 0;
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      angle += 0.01;
+      pieces.forEach(p => {
+        p.tiltAngle += p.tiltSpeed;
+        p.y += (Math.cos(angle + p.d) + 2);
+        p.x += Math.sin(angle) * 0.5;
+        p.tilt = Math.sin(p.tiltAngle) * 12;
+        if (p.y > canvas.height) { p.y = -10; p.x = Math.random() * canvas.width; }
+        ctx.beginPath();
+        ctx.fillStyle = p.color;
+        ctx.ellipse(p.x, p.y, p.r, p.r/2, p.tilt, 0, 2*Math.PI);
+        ctx.fill();
+      });
+    };
+    const id = setInterval(draw, 16);
+    return () => clearInterval(id);
+  }, []);
+  return <canvas ref={canvasRef} style={{position:'fixed',top:0,left:0,pointerEvents:'none',zIndex:999}} />;
+};
+
+const App = () => {
+  const [screen, setScreen] = useState('start');
+  const [mode, setMode] = useState('single');
+  const [players, setPlayers] = useState({ p1: '', p2: '' });
+  const [scores, setScores] = useState({ p1: 0, p2: 0 });
+  const [currentTurn, setCurrentTurn] = useState('p1');
+  const [questions, setQuestions] = useState([]);
+  const [currentQIndex, setCurrentQIndex] = useState(0);
+  const [globalTime, setGlobalTime] = useState(30);
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [showCorrect, setShowCorrect] = useState(false);
+  const [nameError, setNameError] = useState('');
+  const [adminInput, setAdminInput] = useState('');
+  const [adminError, setAdminError] = useState('');
+  const [submitForm, setSubmitForm] = useState({ ekleyen: '', soru: '', a: '', b: '', c: '', d: '', cevap: 'A' });
+  const [submitMsg, setSubmitMsg] = useState('');
+
+  useEffect(() => {
+    let timer;
+    if (screen === 'game' && globalTime > 0) {
+      timer = setInterval(() => {
+        setGlobalTime(prev => {
+          const next = prev - 1;
+          if (next <= 5 && next > 0) playTick();
+          return next;
+        });
+      }, 1000);
+    } else if (screen === 'game' && globalTime === 0) {
+      handleGameEnd();
+    }
+    return () => clearInterval(timer);
+  }, [screen, globalTime]);
+
+  const handleGameEnd = () => {
+    playWin();
+    if (mode === 'single') {
+      saveScore({ name: players.p1 || 'Anonim', score: scores.p1, banned: isBadWord(players.p1 || ''), date: new Date().toLocaleDateString('tr-TR') });
+    } else {
+      saveScore({ name: players.p1, score: scores.p1, banned: isBadWord(players.p1), date: new Date().toLocaleDateString('tr-TR') });
+      saveScore({ name: players.p2, score: scores.p2, banned: isBadWord(players.p2), date: new Date().toLocaleDateString('tr-TR') });
+    }
+    setScreen('result');
+  };
+
+  const startGameSingle = (e) => {
+    e.preventDefault();
+    const name = players.p1.trim();
+    if (!name) { setNameError('Lütfen bir isim girin.'); return; }
+    setNameError('');
+    if (isBadWord(name)) {
+      // sessizce devam et, kayıt sonunda yapılacak
+    }
+    setMode('single');
+    setScores({p1: 0, p2: 0});
+    setCurrentTurn('p1');
+    // Onaylanmış sorularla birleştir
+    const allQ = [...window.sorular, ...getApproved()];
+    setQuestions(shuffleArray(allQ));
+    setCurrentQIndex(0);
+    setGlobalTime(30);
+    setScreen('game');
+  };
+
+  const startGameMulti = (e) => {
+    e.preventDefault();
+    const n1 = players.p1.trim(), n2 = players.p2.trim();
+    if (!n1 || !n2) { setNameError('Her iki oyuncu için de isim girin.'); return; }
+    if (n1.toLowerCase() === n2.toLowerCase()) { setNameError('İki oyuncu aynı ismi kullanamaz.'); return; }
+    setNameError('');
+    setMode('multi');
+    setScores({p1: 0, p2: 0});
+    setCurrentTurn('p1');
+    const allQ = [...window.sorular, ...getApproved()];
+    setQuestions(shuffleArray(allQ));
+    setCurrentQIndex(0);
+    setGlobalTime(60);
+    setScreen('game');
+  };
+
+  const handleAnswer = (key) => {
+    if (selectedAnswer) return;
+    setSelectedAnswer(key);
+    setShowCorrect(true);
+    const q = questions[currentQIndex];
+    if (key === q.cevap) {
+      playCorrect();
+      setScores(prev => ({ ...prev, [currentTurn]: prev[currentTurn] + 10 }));
+    } else {
+      playWrong();
+    }
+    setTimeout(() => {
+      setShowCorrect(false);
+      setSelectedAnswer(null);
+      if (currentQIndex + 1 >= questions.length) {
+        handleGameEnd();
+      } else {
+        setCurrentQIndex(prev => prev + 1);
+        if (mode === 'multi') setCurrentTurn(prev => prev === 'p1' ? 'p2' : 'p1');
+      }
+    }, 350);
+  };
+
+  const resetGame = () => {
+    setPlayers({ p1: '', p2: '' });
+    setScreen('start');
+    setNameError('');
+  };
+
+  const handleAdminLogin = (e) => {
+    e.preventDefault();
+    if (adminInput === ADMIN_PASSWORD) {
+      setAdminError('');
+      setScreen('admin');
+    } else {
+      setAdminError('Yanlış şifre!');
+    }
+    setAdminInput('');
+  };
+
+  // ─── PlayerBox ────────────────────────────────────────────────────────────
+  const PlayerBox = ({ playerKey, name, score, q, isActive }) => {
+    return (
+      <div className={`player-box ${isActive ? 'active ' + playerKey : 'inactive'}`}>
+        {isActive && mode === 'multi' && (
+          <div className={`turn-chip ${playerKey}`}>⬆ Sıra Sende</div>
+        )}
+        <h3>{name || (playerKey === 'p1' ? 'Oyuncu 1' : 'Oyuncu 2')}</h3>
+        <div className="player-score">{score}</div>
+        <div className="options">
+          {q && Object.entries(q.siklar).map(([key, value]) => {
+            let cls = "option-btn";
+            if (showCorrect && isActive) {
+              if (key === q.cevap) cls += " correct";
+              else if (key === selectedAnswer) cls += " wrong";
+            }
+            return (
+              <button key={key} className={cls}
+                onClick={() => handleAnswer(key)}
+                disabled={!isActive || !!selectedAnswer}>
+                <strong>{key})</strong> {value}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    );
+  };
+
+  // ─── Screens ───────────────────────────────────────────────────────────────
+  const renderContent = () => {
+    if (screen === 'start') return (
+      <div className="app-container">
+        <h1 className="title">HYA GAME</h1>
+        <p className="subtitle">Zamana karşı yarış, doğru cevapla puan topla!</p>
+        <button className="btn" onClick={() => { setMode('single'); setScreen('enter-name-single'); }}>Tek Oyuncu (30s)</button>
+        <button className="btn red" onClick={() => { setMode('multi'); setScreen('enter-name-multi'); }}>İki Oyuncu (60s)</button>
+        <button className="btn ghost" onClick={() => setScreen('leaderboard')}>🏆 Sıralama</button>
+      </div>
+    );
+
+    if (screen === 'enter-name-single') return (
+      <div className="app-container">
+        <h2>Adını Gir</h2>
+        <form onSubmit={startGameSingle} style={{marginTop:'1.5rem'}}>
+          <div className="input-group">
+            <label>Kullanıcı Adı</label>
+            <input required value={players.p1} onChange={e => setPlayers({...players, p1: e.target.value})} maxLength={20} autoFocus />
+          </div>
+          {nameError && <p className="error-msg">{nameError}</p>}
+          <button className="btn" type="submit">Oyunu Başlat</button>
+          <button type="button" className="btn ghost" onClick={resetGame}>Geri</button>
+        </form>
+      </div>
+    );
+
+    if (screen === 'enter-name-multi') return (
+      <div className="app-container">
+        <h2>Oyuncular</h2>
+        <form onSubmit={startGameMulti} style={{marginTop:'1.5rem'}}>
+          <div className="input-group">
+            <label>1. Oyuncu</label>
+            <input required value={players.p1} onChange={e => setPlayers({...players, p1: e.target.value})} maxLength={20} autoFocus />
+          </div>
+          <div className="input-group">
+            <label>2. Oyuncu</label>
+            <input required value={players.p2} onChange={e => setPlayers({...players, p2: e.target.value})} maxLength={20} />
+          </div>
+          {nameError && <p className="error-msg">{nameError}</p>}
+          <button className="btn red" type="submit">Savaşı Başlat!</button>
+          <button type="button" className="btn ghost" onClick={resetGame}>Geri</button>
+        </form>
+      </div>
+    );
+
+    if (screen === 'game') {
+      const q = questions[currentQIndex];
+      return (
+        <div className={`app-container wide ${mode === 'single' ? 'single-mode' : ''}`}>
+          <div style={{display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'0.75rem'}}>
+            <span className="q-meta">{q.kategori} — {q.zorluk}</span>
+            <div className="timer-box">⏱ {globalTime}s</div>
+            <span className="q-meta">#{currentQIndex + 1}</span>
+          </div>
+          <div className="question-text">{q.soru}</div>
+          {q.ekleyen && (
+            <div style={{textAlign:'right', fontSize:'0.75rem', color:'#666', marginBottom:'0.5rem', marginTop:'-0.5rem'}}>
+              ✏️ Soruyu yazan: <strong style={{color:'#a78bfa'}}>{q.ekleyen}</strong>
+            </div>
+          )}
+          <div className="game-layout">
+            <PlayerBox playerKey="p1" name={mode==='single' ? (players.p1||'Oyuncu') : players.p1} score={scores.p1} q={q} isActive={currentTurn==='p1'} />
+            {mode === 'multi' && (
+              <PlayerBox playerKey="p2" name={players.p2} score={scores.p2} q={q} isActive={currentTurn==='p2'} />
+            )}
+          </div>
+        </div>
+      );
+    }
+
+    if (screen === 'result') {
+      let winner = null;
+      if (mode === 'multi') {
+        if (scores.p1 > scores.p2) winner = players.p1;
+        else if (scores.p2 > scores.p1) winner = players.p2;
+        else winner = null;
+      }
+
+      const p1Bad = isBadWord(players.p1);
+      const p2Bad = mode === 'multi' && isBadWord(players.p2);
+
+      return (
+        <div className="app-container wide">
+          <Confetti />
+          <h1 style={{marginBottom:'1rem', animation:'popIn 0.5s ease'}}>🎉 Süre Bitti!</h1>
+          {mode === 'multi' && (
+            <div className="winner-banner" style={{animation:'popIn 0.6s ease 0.2s both'}}>
+              {winner ? `🏆 Kazanan: ${winner}` : '🤝 Berabere!'}
+            </div>
+          )}
+          <div className="game-layout" style={{marginBottom:'1.5rem'}}>
+            <div className={`player-box active p1`} style={{pointerEvents:'none', animation:'popIn 0.5s ease 0.3s both'}}>
+              <h3>{mode==='single' ? (players.p1||'Oyuncu') : players.p1}</h3>
+              <div className="player-score" style={{color:'#38bdf8'}}>{scores.p1}</div>
+              {p1Bad && <p style={{color:'#facc15', fontSize:'0.8rem', marginTop:'0.5rem'}}>✓ Skor alındı!</p>}
+            </div>
+            {mode === 'multi' && (
+              <div className={`player-box active p2`} style={{pointerEvents:'none', animation:'popIn 0.5s ease 0.45s both'}}>
+                <h3>{players.p2}</h3>
+                <div className="player-score" style={{color:'#f87171'}}>{scores.p2}</div>
+                {p2Bad && <p style={{color:'#facc15', fontSize:'0.8rem', marginTop:'0.5rem'}}>✓ Skor alındı!</p>}
+              </div>
+            )}
+          </div>
+          <div style={{display:'flex', gap:'0.75rem'}}>
+            <button className="btn" style={{flex:1}} onClick={() => setScreen('leaderboard')}>🏆 Sıralama</button>
+            <button className="btn ghost" style={{flex:1}} onClick={resetGame}>Ana Menü</button>
+          </div>
+        </div>
+      );
+    }
+
+    if (screen === 'leaderboard') {
+      const all = getScores();
+      const visible = all.filter(s => !s.banned).slice(0, 10);
+      return (
+        <div className="app-container" style={{maxWidth:'550px'}}>
+          <h2 style={{marginBottom:'1.5rem'}}>🏆 En İyi 10</h2>
+          {visible.length === 0 ? (
+            <p style={{color:'#888', marginBottom:'1.5rem'}}>Henüz skor yok. İlk sen gir!</p>
+          ) : (
+            <table className="lb-table">
+              <thead><tr><th>#</th><th>İsim</th><th>Skor</th><th>Tarih</th></tr></thead>
+              <tbody>
+                {visible.map((s, i) => (
+                  <tr key={i} className={i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : ''}>
+                    <td>{i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : i+1}</td>
+                    <td>{s.name}</td>
+                    <td><strong>{s.score}</strong></td>
+                    <td style={{color:'#888', fontSize:'0.8rem'}}>{s.date}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+          <button className="btn ghost" style={{marginTop:'1rem'}} onClick={resetGame}>Ana Menü</button>
+        </div>
+      );
+    }
+
+    if (screen === 'submit-question') {
+      const sf = submitForm;
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        if (!sf.ekleyen.trim() || !sf.soru.trim() || !sf.a.trim() || !sf.b.trim() || !sf.c.trim() || !sf.d.trim()) {
+          setSubmitMsg('Tüm alanları doldurun.'); return;
+        }
+        const pending = getPending();
+        pending.push({
+          id: Date.now(),
+          ekleyen: sf.ekleyen.trim(),
+          soru: sf.soru.trim(),
+          siklar: { A: sf.a.trim(), B: sf.b.trim(), C: sf.c.trim(), D: sf.d.trim() },
+          cevap: sf.cevap,
+          kategori: 'Kullanıcı Sorusu',
+          zorluk: 'orta',
+          tarih: new Date().toLocaleDateString('tr-TR')
+        });
+        savePending(pending);
+        setSubmitMsg('✅ Sorunuz admin onayına gönderildi!');
+        setSubmitForm({ ekleyen: '', soru: '', a: '', b: '', c: '', d: '', cevap: 'A' });
+      };
+      return (
+        <div className="app-container" style={{maxWidth:'520px', textAlign:'left', overflow:'auto', maxHeight:'85vh'}}>
+          <h2 style={{textAlign:'center', marginBottom:'1.5rem'}}>✏️ Soru Ekle</h2>
+          <form onSubmit={handleSubmit}>
+            <div className="input-group">
+              <label>Ekleyen Adı</label>
+              <input value={sf.ekleyen} onChange={e => setSubmitForm({...sf, ekleyen: e.target.value})} maxLength={30} autoFocus />
+            </div>
+            <div className="input-group">
+              <label>Soru</label>
+              <textarea value={sf.soru} onChange={e => setSubmitForm({...sf, soru: e.target.value})}
+                style={{width:'100%',padding:'0.7rem',borderRadius:'6px',border:'1px solid #3d3d3d',background:'#2a2a2a',color:'#e0e0e0',fontSize:'1rem',resize:'vertical',minHeight:'70px',fontFamily:'inherit'}}
+              />
+            </div>
+            {['a','b','c','d'].map(k => (
+              <div className="input-group" key={k}>
+                <label>Şık {k.toUpperCase()}</label>
+                <input value={sf[k]} onChange={e => setSubmitForm({...sf, [k]: e.target.value})} maxLength={120} />
+              </div>
+            ))}
+            <div className="input-group">
+              <label>Doğru Şık</label>
+              <select value={sf.cevap} onChange={e => setSubmitForm({...sf, cevap: e.target.value})}
+                style={{width:'100%',padding:'0.7rem',borderRadius:'6px',border:'1px solid #3d3d3d',background:'#2a2a2a',color:'#e0e0e0',fontSize:'1rem'}}>
+                <option>A</option><option>B</option><option>C</option><option>D</option>
+              </select>
+            </div>
+            {submitMsg && <p style={{color: submitMsg.startsWith('✅') ? '#4ade80' : '#f87171', marginBottom:'0.75rem'}}>{submitMsg}</p>}
+            <button className="btn" type="submit">Gönder (Admin Onayına)</button>
+            <button type="button" className="btn ghost" onClick={() => { setSubmitMsg(''); resetGame(); }}>Geri</button>
+          </form>
+        </div>
+      );
+    }
+
+    if (screen === 'admin-login') return (
+      <div className="app-container" style={{maxWidth:'380px'}}>
+        <h2 style={{marginBottom:'1.5rem'}}>🔐 Admin Girişi</h2>
+        <form onSubmit={handleAdminLogin}>
+          <div className="input-group">
+            <label>Şifre</label>
+            <input type="password" value={adminInput} onChange={e => setAdminInput(e.target.value)} autoFocus />
+          </div>
+          {adminError && <p className="error-msg">{adminError}</p>}
+          <button className="btn" type="submit">Giriş</button>
+          <button type="button" className="btn ghost" onClick={resetGame}>Geri</button>
+        </form>
+      </div>
+    );
+
+    if (screen === 'admin') {
+      const all = getScores();
+      const pending = getPending();
+
+      const approvePending = (item) => {
+        const approved = getApproved();
+        approved.push({ ...item, id: undefined });
+        saveApproved(approved);
+        const newPending = getPending().filter(p => p.id !== item.id);
+        savePending(newPending);
+        setScreen('admin'); // re-render
+      };
+
+      const rejectPending = (item) => {
+        const newPending = getPending().filter(p => p.id !== item.id);
+        savePending(newPending);
+        setScreen('admin');
+      };
+
+      return (
+        <div className="app-container" style={{maxWidth:'680px', overflow:'auto', maxHeight:'85vh'}}>
+          <h2 style={{marginBottom:'1rem'}}>⚙️ Admin Paneli</h2>
+
+          {/* Bekleyen Sorular */}
+          {pending.length > 0 && (
+            <div style={{marginBottom:'1.5rem'}}>
+              <h3 style={{color:'#facc15', marginBottom:'0.75rem'}}>📬 Bekleyen Sorular ({pending.length})</h3>
+              {pending.map(item => (
+                <div key={item.id} style={{background:'#2a2a2a', border:'1px solid #444', borderRadius:'10px', padding:'1rem', marginBottom:'0.75rem'}}>
+                  <p style={{marginBottom:'0.5rem'}}><strong style={{color:'#a78bfa'}}>✏️ {item.ekleyen}</strong> — {item.tarih}</p>
+                  <p style={{marginBottom:'0.5rem', fontWeight:'bold'}}>{item.soru}</p>
+                  <p style={{fontSize:'0.85rem', color:'#aaa'}}>
+                    A) {item.siklar.A} &nbsp;|&nbsp; B) {item.siklar.B} &nbsp;|&nbsp; C) {item.siklar.C} &nbsp;|&nbsp; D) {item.siklar.D}
+                  </p>
+                  <p style={{fontSize:'0.85rem', color:'#4ade80', marginTop:'0.25rem'}}>Doğru: {item.cevap}) {item.siklar[item.cevap]}</p>
+                  <div style={{display:'flex', gap:'0.5rem', marginTop:'0.75rem'}}>
+                    <button className="btn" style={{flex:1, padding:'0.5rem', fontSize:'0.85rem'}} onClick={() => approvePending(item)}>✅ Onayla</button>
+                    <button className="btn red" style={{flex:1, padding:'0.5rem', fontSize:'0.85rem'}} onClick={() => rejectPending(item)}>❌ Reddet</button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Skor Tablosu */}
+          <h3 style={{color:'#94a3b8', marginBottom:'0.75rem'}}>📊 Skorlar</h3>
+          <div style={{display:'flex', gap:'0.75rem', marginBottom:'1rem'}}>
+            <button className="btn red" style={{flex:1, fontSize:'0.9rem'}} onClick={() => { localStorage.removeItem('hya_scores'); setScreen('admin'); }}>🗑 Tüm Skorları Sil</button>
+            <button className="btn ghost" style={{flex:1, fontSize:'0.9rem'}} onClick={resetGame}>Çıkış</button>
+          </div>
+          {all.length === 0 ? (
+            <p style={{color:'#888'}}>Kayıtlı skor yok.</p>
+          ) : (
+            <table className="lb-table">
+              <thead><tr><th>#</th><th>İsim</th><th>Skor</th><th>Durum</th><th>Tarih</th></tr></thead>
+              <tbody>
+                {all.map((s, i) => (
+                  <tr key={i} style={s.banned ? {opacity:0.45} : {}}>
+                    <td>{i+1}</td>
+                    <td>{s.name}</td>
+                    <td><strong>{s.score}</strong></td>
+                    <td>{s.banned ? <span style={{color:'#f87171'}}>Yasaklı</span> : <span style={{color:'#4ade80'}}>Temiz</span>}</td>
+                    <td style={{color:'#888', fontSize:'0.8rem'}}>{s.date}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </div>
+      );
+    }
+
+    return null;
+  };
+
+  return (
+    <>
+      <nav className="navbar">
+        <div className="logo" style={{cursor:'pointer'}} onClick={() => setScreen('start')}>HYA <span>GAME</span></div>
+        <div className="nav-menu">
+          {screen !== 'start' && <button className="nav-btn" onClick={resetGame}>Ana Menü</button>}
+          <button className="nav-btn" onClick={() => { setSubmitMsg(''); setScreen('submit-question'); }}>✏️ Soru Ekle</button>
+          <button className="nav-btn" onClick={() => setScreen('leaderboard')}>🏆 Sıralama</button>
+          <button className="nav-btn" onClick={() => setScreen('admin-login')}>Admin</button>
+        </div>
+      </nav>
+      <main>
+        {renderContent()}
+      </main>
+      <footer className="footer">
+        &copy; 2026 HYA GAME &mdash; Yağız, Hasan & Adil
+      </footer>
+    </>
+  );
+};
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+    </script>
+</body>
+</html>
