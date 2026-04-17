@@ -24,7 +24,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   background: #121212;
   color: #e0e0e0;
-  overflow: hidden;
+  overflow-x: hidden;  /* yatay kayma yok, dikey scroll serbest */
 }
 
 /* ── Correct cevap - Yanlış cevap animasyonları ── */
@@ -34,7 +34,7 @@ body {
 #root {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;  /* mobilde input açılınca clone olmasını du */
 }
 
 /* ── Navbar ─────────────────────────────────────── */
@@ -42,17 +42,20 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.65rem 2rem;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0.65rem 1.25rem;
   background: #1e1e1e;
   border-bottom: 1px solid #2d2d2d;
   flex-shrink: 0;
 }
 .logo { font-size: 1.4rem; font-weight: 900; color: #38bdf8; user-select:none; }
 .logo span { color: #f87171; }
-.nav-menu { display: flex; gap: 0.5rem; }
+.nav-menu { display: flex; flex-wrap: wrap; gap: 0.4rem; }
 .nav-btn {
   background: #2d2d2d; border: 1px solid #3d3d3d; color: #ccc;
-  padding: 0.4rem 0.9rem; border-radius: 6px; cursor: pointer; font-size: 0.9rem; font-weight: bold;
+  padding: 0.4rem 0.75rem; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: bold;
+  white-space: nowrap;
 }
 .nav-btn:hover { background: #3a3a3a; color: #fff; }
 
@@ -61,8 +64,8 @@ main {
   flex: 1;
   display: flex;
   justify-content: center;
-  align-items: center;
-  padding: 1rem;
+  align-items: flex-start;
+  padding: 1rem 0.75rem;
   overflow: auto;
 }
 
