@@ -1,0 +1,17 @@
+{
+  "name": "hya-game",
+  "version": "2.0.0",
+  "description": "HYA Game - Türk tarihi bilgi yarışması",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@libsql/client": "^0.14.0",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  }
+}

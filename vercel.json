@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/index.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    { "src": "/api/(.*)", "dest": "api/index.js" },
+    { "src": "/(.*)", "dest": "/index.html" }
+  ],
+  "env": {
+    "TURSO_DATABASE_URL": "@turso-database-url",
+    "TURSO_AUTH_TOKEN": "@turso-auth-token"
+  }
+}
